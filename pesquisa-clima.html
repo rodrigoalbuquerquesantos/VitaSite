@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ConectaVita - Pesquisa de Clima</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Estilização moderna e limpa integrada ao visual do ConectaVita */
+        .pesquisa-wrapper {
+            max-width: 680px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .card-pesquisa {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 35px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border: 1px solid #eef2f5;
+        }
+
+        .boas-vindas {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .boas-vindas h2 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .boas-vindas p {
+            color: #5a6a85;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .form-group {
+            margin-bottom: 28px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 14px;
+            font-size: 1.05rem;
+        }
+
+        /* Opções em Cards/Botões Selecionáveis */
+        .opcoes-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+        }
+
+        .opcao-item {
+            position: relative;
+        }
+
+        .opcao-item input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        .opcao-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 6px;
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-align: center;
+        }
+
+        .opcao-card:hover {
+            border-color: #cbd5e1;
+            background-color: #f1f5f9;
+            transform: translateY(-2px);
+        }
+
+        .opcao-item input[type="radio"]:checked + .opcao-card {
+            border-color: #2e7d32;
+            background-color: #f0fdf4;
+            box-shadow: 0 4px 12px rgba(46, 125, 50, 0.15);
+        }
+
+        .opcao-emoji {
+            font-size: 2rem;
+            margin-bottom: 6px;
+            line-height: 1;
+        }
+
+        .opcao-texto {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .opcao-item input[type="radio"]:checked + .opcao-card .opcao-texto {
+            color: #166534;
+        }
+
+        textarea.campo-texto {
+            width: 100%;
+            height: 110px;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 0.95rem;
+            color: #334155;
+            box-sizing: border-box;
+            resize: vertical;
+            transition: border-color 0.2s;
+        }
+
+        textarea.campo-texto:focus {
+            outline: none;
+            border-color: #2e7d32;
+        }
+
+        .btn-enviar-clima {
+            width: 100%;
+            background-color: #2e7d32;
+            color: #ffffff;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 1.05rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        .btn-enviar-clima:hover {
+            background-color: #1b5e20;
+        }
+
+        .btn-enviar-clima:active {
+            transform: scale(0.99);
+        }
+
+        /* Seção do Painel de Resultados (Simulação do Dashboard/Power BI) */
+        .painel-resultados {
+            margin-top: 35px;
+            padding-top: 25px;
+            border-top: 2px dashed #e2e8f0;
+        }
+
+        .painel-resultados h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .grid-contadores {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .card-contador {
+            background: #f8fafc;
+            padding: 12px 5px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .card-contador .num {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2e7d32;
+        }
+
+        .card-contador .label {
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+
+        .lista-comentarios {
+            max-height: 200px;
+            overflow-y: auto;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 10px 15px;
+        }
+
+        .item-comentario {
+            font-size: 0.9rem;
+            color: #334155;
+            padding: 8px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .item-comentario:last-child {
+            border-bottom: none;
+        }
+
+        .btn-limpar {
+            background: transparent;
+            border: none;
+            color: #94a3b8;
+            font-size: 0.75rem;
+            cursor: pointer;
+            margin-top: 15px;
+            text-decoration: underline;
+        }
+
+        /* Responsividade para telas menores */
+        @media (max-width: 580px) {
+            .opcoes-grid, .grid-contadores {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Cabeçalho / Navbar (Mantido idêntico) -->
+    <nav class="navbar">
+        <div class="navbar-logo">
+            <a href="index.html">
+            <img src="logo lotus.jpeg" alt="Logo Lótus">
+            </a>
+            ConectaVita
+        </div>
+        <div class="nav-links">
+            <div class="dropdown">
+                <button class="dropbtn">Nossos Pilares ▾</button>
+                <div class="dropdown-content">
+                    <a href="index.html#saude-mental">🧠 Saúde Mental</a>
+                    <a href="index.html#saude-fisica">💪 Saúde Física</a>
+                    <a href="index.html#desenvolvimento">💼 Desenvolvimento Corporativo</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="dropbtn">Ferramentas ▾</button>
+                <div class="dropdown-content">
+                    <a href="em-construcao.html">Painel do Gestor (Power BI)</a>
+                    <a href="https://wa.me/5500000000000?text=Olá,%20vim%20pelo%20portal%20ConectaVita%20e%20gostaria%20de%20falar%20com%20o%20RH!" target="_blank">Falar com o RH</a>
+                    <a href="pesquisa-clima.html">Pesquisa de Clima</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Conteúdo da Pesquisa -->
+    <main class="pesquisa-wrapper">
+        <div class="card-pesquisa">
+            
+            <div class="boas-vindas">
+                <h2>Como está o seu dia hoje? 🌱</h2>
+                <p>Sua opinião é fundamental para tornarmos o nosso ambiente de trabalho um lugar cada vez mais saudável, leve e acolhedor.</p>
+            </div>
+
+            <form id="formClima" onsubmit="salvarResposta(event)">
+                
+                <div class="form-group">
+                    <label>Selecione a opção que melhor define seu momento:</label>
+                    
+                    <div class="opcoes-grid">
+                        
+                        <label class="opcao-item">
+                            <input type="radio" name="sentimento" value="muito_bem" required>
+                            <div class="opcao-card">
+                                <span class="opcao-emoji">😄</span>
+                                <span class="opcao-texto">Muito bem</span>
+                            </div>
+                        </label>
+
+                        <label class="opcao-item">
+                            <input type="radio" name="sentimento" value="bem">
+                            <div class="opcao-card">
+                                <span class="opcao-emoji">🙂</span>
+                                <span class="opcao-texto">Bem</span>
+                            </div>
+                        </label>
+
+                        <label class="opcao-item">
+                            <input type="radio" name="sentimento" value="tranquilo">
+                            <div class="opcao-card">
+                                <span class="opcao-emoji">😐</span>
+                                <span class="opcao-texto">Normal</span>
+                            </div>
+                        </label>
+
+                        <label class="opcao-item">
+                            <input type="radio" name="sentimento" value="cansado">
+                            <div class="opcao-card">
+                                <span class="opcao-emoji">😕</span>
+                                <span class="opcao-texto">Cansado(a)</span>
+                            </div>
+                        </label>
+
+                        <label class="opcao-item">
+                            <input type="radio" name="sentimento" value="sobrecarregado">
+                            <div class="opcao-card">
+                                <span class="opcao-emoji">😫</span>
+                                <span class="opcao-texto">Estressado(a)</span>
+                            </div>
+                        </label>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="comentario">Quer deixar uma mensagem, elogio ou sugestão? (Opcional)</label>
+                    <textarea id="comentario" class="campo-texto" placeholder="Sinta-se à vontade para escrever aqui... As respostas são 100% anônimas."></textarea>
+                </div>
+
+                <button type="submit" class="btn-enviar-clima">Enviar minha resposta</button>
+
+            </form>
+
+            <!-- Painel de Resultados da Demonstração -->
+            <div class="painel-resultados">
+                <h3>📊 Visão Geral dos Sentimentos (Painel do Gestor)</h3>
+                
+                <div class="grid-contadores">
+                    <div class="card-contador">
+                        <div class="num" id="qtd_muito_bem">0</div>
+                        <div class="label">😄 Muito bem</div>
+                    </div>
+                    <div class="card-contador">
+                        <div class="num" id="qtd_bem">0</div>
+                        <div class="label">🙂 Bem</div>
+                    </div>
+                    <div class="card-contador">
+                        <div class="num" id="qtd_tranquilo">0</div>
+                        <div class="label">😐 Normal</div>
+                    </div>
+                    <div class="card-contador">
+                        <div class="num" id="qtd_cansado">0</div>
+                        <div class="label">😕 Cansado</div>
+                    </div>
+                    <div class="card-contador">
+                        <div class="num" id="qtd_sobrecarregado">0</div>
+                        <div class="label">😫 Estressado</div>
+                    </div>
+                </div>
+
+                <label style="font-weight: 600; color: #2c3e50; display: block; margin-bottom: 8px;">Comentários Recentes:</label>
+                <div class="lista-comentarios" id="containerComentarios">
+                    <p style="color: #94a3b8; font-size: 0.85rem; text-align: center;">Nenhum comentário enviado ainda.</p>
+                </div>
+
+                <div style="text-align: right;">
+                    <button type="button" class="btn-limpar" onclick="limparDados()">Limpar dados da demonstração</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Rodapé (Mantido idêntico) -->
+    <footer>
+        <p>&copy; 2026 Vita Jovem - Projeto ConectaVita. Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- Lógica JavaScript para salvar localmente durante a demonstração -->
+    <script>
+        function obterDados() {
+            const dados = localStorage.getItem('dadosPesquisaClima');
+            return dados ? JSON.parse(dados) : {
+                contagem: { muito_bem: 0, bem: 0, tranquilo: 0, cansado: 0, sobrecarregado: 0 },
+                comentarios: []
+            };
+        }
+
+        function atualizarTela() {
+            const dados = obterDados();
+            
+            // Atualiza os contadores
+            document.getElementById('qtd_muito_bem').textContent = dados.contagem.muito_bem;
+            document.getElementById('qtd_bem').textContent = dados.contagem.bem;
+            document.getElementById('qtd_tranquilo').textContent = dados.contagem.tranquilo;
+            document.getElementById('qtd_cansado').textContent = dados.contagem.cansado;
+            document.getElementById('qtd_sobrecarregado').textContent = dados.contagem.sobrecarregado;
+
+            // Atualiza os comentários
+            const container = document.getElementById('containerComentarios');
+            if (dados.comentarios.length === 0) {
+                container.innerHTML = '<p style="color: #94a3b8; font-size: 0.85rem; text-align: center;">Nenhum comentário enviado ainda.</p>';
+            } else {
+                container.innerHTML = dados.comentarios.map(c => `<div class="item-comentario">💬 "${c}"</div>`).join('');
+            }
+        }
+
+        function salvarResposta(event) {
+            event.preventDefault();
+            
+            const sentimento = document.querySelector('input[name="sentimento"]:checked').value;
+            const comentario = document.getElementById('comentario').value.trim();
+
+            const dados = obterDados();
+            dados.contagem[sentimento] = (dados.contagem[sentimento] || 0) + 1;
+
+            if (comentario !== "") {
+                dados.comentarios.unshift(comentario); // Adiciona o comentário mais recente no topo
+            }
+
+            localStorage.setItem('dadosPesquisaClima', JSON.stringify(dados));
+            
+            alert('Resposta registrada com sucesso!');
+            document.getElementById('formClima').reset();
+            atualizarTela();
+        }
+
+        function limparDados() {
+            if (confirm('Deseja zerar os contadores e comentários da demonstração?')) {
+                localStorage.removeItem('dadosPesquisaClima');
+                atualizarTela();
+            }
+        }
+
+        // Carrega as informações ao abrir a página
+        document.addEventListener('DOMContentLoaded', atualizarTela);
+    </script>
+</body>
+</html>

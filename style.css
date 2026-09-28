@@ -1,0 +1,368 @@
+/* =========================================
+   PALETA DE CORES: SETEMBRO AMARELO
+   ========================================= */
+:root {
+    --amarelo-principal: #FBC02D;  /* Amarelo vibrante acolhedor */
+    --amarelo-hover: #F57F17;      /* Amarelo mais escuro para botões em foco */
+    --amarelo-suave: #FFFDE7;      /* Amarelo muito claro para destaques e badges */
+    --amarelo-fundo: #FFF8E1;      /* Fundo suave da página */
+    --texto-escuro: #3E2723;       /* Marrom bem escuro (substitui o preto/roxo para dar calor ao layout) */
+    --texto-corpo: #4A3B32;        /* Texto de leitura confortável */
+    --cinza-borda: #FFE082;        /* Bordas amareladas e suaves */
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--amarelo-fundo);
+    margin: 0;
+    padding: 0;
+    color: var(--texto-corpo);
+    line-height: 1.6;
+}
+
+/* Animações Iniciais */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animar {
+    animation: fadeIn 1s ease-out forwards;
+}
+
+/* Cabeçalho (Navbar) Profissional */
+.navbar {
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px rgba(251, 192, 45, 0.15);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 50px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: var(--texto-escuro);
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.navbar-logo img {
+    height: 50px;
+}
+
+/* Menu Cascata (Dropdown) */
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropbtn {
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: var(--texto-escuro);
+    font-weight: 600;
+    cursor: pointer;
+    padding: 10px;
+    transition: color 0.3s;
+}
+
+.dropdown:hover .dropbtn {
+    color: var(--amarelo-hover);
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    min-width: 220px;
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--cinza-borda);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: var(--texto-escuro);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    border-bottom: 1px solid #FFF59D;
+    transition: background 0.3s;
+}
+
+.dropdown-content a:hover {
+    background-color: var(--amarelo-principal);
+    color: #ffffff;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Seção Hero (Boas-vindas) */
+.hero {
+    background: linear-gradient(135deg, #FBC02D, #F57F17);
+    color: #ffffff;
+    text-align: center;
+    padding: 80px 20px;
+    border-bottom: 5px solid #F7D070;
+}
+
+.hero h1 {
+    font-size: 3em;
+    margin: 0;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+}
+
+.hero p {
+    font-size: 1.2em;
+    max-width: 600px;
+    margin: 20px auto;
+    opacity: 0.95;
+}
+
+/* Seção Sobre a Vita Jovem */
+.sobre-container {
+    max-width: 1000px;
+    margin: 50px auto;
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(251, 192, 45, 0.12);
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    border-left: 6px solid var(--amarelo-principal);
+}
+
+.sobre-texto h2 {
+    color: var(--texto-escuro);
+    margin-top: 0;
+}
+
+.sobre-texto p {
+    font-size: 16px;
+    color: var(--texto-corpo);
+    text-align: justify;
+}
+
+.sobre-img img {
+    max-width: 250px;
+    border-radius: 10px;
+}
+
+/* Categorias de Cursos (Grid) */
+.categorias-container {
+    max-width: 1100px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+.categoria-titulo {
+    font-size: 24px;
+    color: var(--texto-escuro);
+    border-bottom: 3px solid var(--amarelo-principal);
+    display: inline-block;
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+}
+
+.grid-cursos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-bottom: 50px;
+}
+
+/* Cards de Curso Animados */
+.card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.06);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    border-top: 5px solid var(--amarelo-principal);
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(245, 127, 23, 0.2);
+}
+
+.card h3 {
+    margin: 0 0 10px 0;
+    color: var(--texto-escuro);
+    font-size: 20px;
+}
+
+.card p {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.badge {
+    background-color: var(--amarelo-suave);
+    color: #E65100;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 15px;
+    border: 1px solid #FFE082;
+}
+
+.btn-acessar {
+    display: block;
+    text-align: center;
+    background-color: var(--amarelo-principal);
+    color: var(--texto-escuro);
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: background 0.3s, color 0.3s;
+}
+
+.btn-acessar:hover {
+    background-color: var(--amarelo-hover);
+    color: #ffffff;
+}
+
+/* Rodapé */
+footer {
+    background-color: var(--texto-escuro);
+    color: var(--amarelo-suave);
+    text-align: center;
+    padding: 20px;
+    margin-top: 50px;
+    border-top: 4px solid var(--amarelo-principal);
+}
+
+/* =========================================
+   REGRAS DE RESPONSIVIDADE (MOBILE)
+   ========================================= */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        padding: 15px 20px;
+        gap: 15px;
+    }
+    
+    .nav-links {
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .hero h1 {
+        font-size: 2.2em;
+    }
+    
+    .hero {
+        padding: 50px 20px;
+    }
+
+    .sobre-container {
+        flex-direction: column;
+        text-align: center;
+        padding: 25px;
+        margin: 30px 20px;
+        gap: 20px;
+    }
+
+    .sobre-texto p {
+        text-align: center;
+    }
+
+    .grid-cursos {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================================
+   ESTILOS DA PÁGINA "EM CONSTRUÇÃO"
+   ========================================= */
+.construcao-container {
+    max-width: 800px;
+    margin: 80px auto;
+    background: #ffffff;
+    padding: 60px 40px;
+    border-radius: 12px;
+    box-shadow: 0 5px 25px rgba(251, 192, 45, 0.15);
+    text-align: center;
+    border-top: 5px solid var(--amarelo-principal);
+    min-height: 40vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.construcao-container h1 {
+    color: var(--texto-escuro);
+    font-size: 2.5em;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.construcao-container p {
+    font-size: 1.1em;
+    color: var(--texto-corpo);
+    max-width: 600px;
+    margin-bottom: 30px;
+}
+
+.construcao-icon {
+    font-size: 5em;
+    animation: flutuar 3s ease-in-out infinite;
+}
+
+.btn-voltar {
+    display: inline-block;
+    background-color: var(--amarelo-principal);
+    color: var(--texto-escuro);
+    text-decoration: none;
+    padding: 12px 25px;
+    border-radius: 6px;
+    font-weight: bold;
+    transition: background 0.3s, transform 0.3s, color 0.3s;
+}
+
+.btn-voltar:hover {
+    background-color: var(--amarelo-hover);
+    color: #ffffff;
+    transform: translateY(-3px);
+}
+
+@keyframes flutuar {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
+}
+
+@media (max-width: 768px) {
+    .construcao-container {
+        margin: 40px 20px;
+        padding: 40px 20px;
+    }
+    .construcao-container h1 {
+        font-size: 2em;
+    }
+}
